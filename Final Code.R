@@ -168,17 +168,24 @@ print(p2)
 ggsave("obj_subj_risk_by_education.png", p2, width = 10, height = 4)
 
 #11. Stats for Figure 2 (Table 2)
-lower_corr <- cor(subset(analysis_data, education_group == "Lower Education")$automation_risk_orig, 
-                  as.numeric(subset(analysis_data, education_group == "Lower Education")$subjective_risk))
-intermediate_corr <- cor(subset(analysis_data, education_group == "Intermediate Education")$automation_risk_orig, 
-                         as.numeric(subset(analysis_data, education_group == "Intermediate Education")$subjective_risk))
-higher_corr <- cor(subset(analysis_data, education_group == "Higher Education")$automation_risk_orig, 
-                   as.numeric(subset(analysis_data, education_group == "Higher Education")$subjective_risk))
-corr_results <- data.frame(
+lower_data <- subset(analysis_data, education_group == "Lower Education")
+intermediate_data <- subset(analysis_data, education_group == "Intermediate Education")
+higher_data <- subset(analysis_data, education_group == "Higher Education")
+
+lower_model <- lm(as.numeric(subjective_risk) ~ automation_risk_orig, data = lower_data)
+intermediate_model <- lm(as.numeric(subjective_risk) ~ automation_risk_orig, data = intermediate_data)
+higher_model <- lm(as.numeric(subjective_risk) ~ automation_risk_orig, data = higher_data)
+results <- data.frame(
   Education_Group = c("Lower", "Intermediate", "Higher"),
-  Correlation = c(lower_corr, intermediate_corr, higher_corr)
+  Observations = c(nrow(lower_data), nrow(intermediate_data), nrow(higher_data)),
+  R_squared = c(summary(lower_model)$r.squared, 
+                summary(intermediate_model)$r.squared, 
+                summary(higher_model)$r.squared),
+  Coefficient = c(coef(lower_model)[2], 
+                  coef(intermediate_model)[2], 
+                  coef(higher_model)[2])
 )
-print(corr_results)
+print(results)
 
 #12. Ordered Logit Regressions (Table 4)
 #12a. No controls
@@ -221,7 +228,7 @@ plot(pred_effects3,
      xlab = "Standardized Automation Risk Score",
      ylab = "Probability",
      colors = "black",
-     xlim = c(-1.5, 1.5))  # Adjust x-axis range here
+     xlim = c(-1.5, 1.5)) 
 dev.off()
 
 #14. OLS regressions (Table 3)
