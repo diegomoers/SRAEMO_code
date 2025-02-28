@@ -11,10 +11,10 @@ library(effects)
 library(ordinal)
 library(scales)   
 
-background_data_path <- "/Users/diegomoers/Desktop/SRAEMO/data/background_data_062020.dta"
-automation_data_path <- "/Users/diegomoers/Desktop/SRAEMO/data/SW_automation_2020.dta"
-lmi_index_path <- "/Users/diegomoers/Desktop/SRAEMO/data/LMII-AE Index-2019.xlsx"
-occupation_data_path <- "/Users/diegomoers/Desktop/SRAEMO/data/occupation_w13_WaS.dta"
+background_data_path <- "/Users/diegomoers/Desktop/SRAEMO/SRAEMO_code/DATA/background_data_062020.dta"
+automation_data_path <- "/Users/diegomoers/Desktop/SRAEMO/SRAEMO_code/DATA/SW_automation_2020.dta"
+lmi_index_path <- "/Users/diegomoers/Desktop/SRAEMO/SRAEMO_code/DATA/LMII-AE Index-2019.xlsx"
+occupation_data_path <- "/Users/diegomoers/Desktop/SRAEMO/SRAEMO_code/DATA/occupation_w13_WaS.dta"
 background_data <- read_dta(background_data_path)
 automation_data <- read_dta(automation_data_path)
 occupation_data <- read_dta(occupation_data_path)
